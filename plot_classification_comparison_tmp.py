@@ -119,7 +119,7 @@ classifiers = [
 
 datasets = [noisy_circles, noisy_moons, aniso, blobs,  no_structure]
 
-figure = plt.figure(figsize=(15,15))
+figure = plt.figure(figsize=(10,10))
 i=1
 
 
