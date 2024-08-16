@@ -26,31 +26,20 @@ def resize_image_with_aspect_ratio(image, target_size):
 
 
 
-
-
 # Load the image
 image_path = "C:\\Users\\Moha-Cate\\Downloads\\yaserina.jpg"  # Replace with your image path
 image = io.imread(image_path)
 
-# Resize the image
-# Resize the image while maintaining the aspect ratio
-############ 10 clots in each centimeter
-############ height 56 centimeter
-target_size = 560  # The larger dimension will be resized to 256 pixels
-image_resized = resize_image_with_aspect_ratio(image, target_size)
-
 # Reshape the image to a 2D array of pixels
-pixels = image_resized.reshape(-1, 3)
+pixels = image.reshape(-1, 3)
 
 # Quantize the colors using KMeans
-quantize_colors = 10  # Number of colors to quantize to
+quantize_colors = 25  # Number of colors to quantize to
 kmeans = KMeans(n_clusters=quantize_colors, random_state=42).fit(pixels)
 labels = kmeans.predict(pixels)
-quantized_image = kmeans.cluster_centers_[labels].reshape(image_resized.shape)#.astype(np.uint8)
+quantized_image = kmeans.cluster_centers_[labels].reshape(image.shape)#.astype(np.uint8)
 
 # Create a legend for the quantized colors
-unique_colors = kmeans.cluster_centers_
-
 if np.max(quantized_image) <=1:
     quantized_image = (255*quantized_image).astype(np.uint8)
     unique_colors = (255*kmeans.cluster_centers_).astype(np.uint8)
@@ -83,3 +72,11 @@ fig_legend = plt.figure(figsize=(6, 6))
 plt.legend(handles=legend_patches, loc='center', frameon=False)
 plt.axis('off')
 plt.show()
+
+
+# Resize the image
+# Resize the image while maintaining the aspect ratio
+############ 10 clots in each centimeter
+############ height 56 centimeter
+target_size = 560  # The larger dimension will be resized to 256 pixels
+image_resized = resize_image_with_aspect_ratio(image, target_size)
